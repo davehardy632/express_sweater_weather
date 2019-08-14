@@ -19,7 +19,7 @@ router.post("/", function(req, res, next) {
       res.status(200).send(JSON.stringify(apiKeyResponse));
     } else {
       res.setHeader("Content-Type", "application/json");
-      res.status(200).send(JSON.stringify("Invalid credentials."));
+      res.status(400).send(JSON.stringify("Invalid credentials."));
     }
   })
   .catch(error => {
