@@ -18,6 +18,7 @@ var latLongService = new GoogleGeocodingApiService();
 
 module.exports = latLongService;
 
+// "https://api.darksky.net/forecast/a0afd4046e86e2555d0a937cdac811fe/39.7392358,-104.990251?latitude=39.7392358&longitude=-104.990251&exclude=minutely,alerts,flags"
 
 // .then(response => response.json())
 // .then(hedgehogs => appendHedgehogs(hedgehogs))
