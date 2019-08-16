@@ -24,18 +24,19 @@ router.get("/", function(req, res, next) {
           return response.json();
         })
         .then(function(myJson) {
-          current = {};
-          hourly = {};
-          daily = {};
-          current["location"] = locationValue;
-          current[Object.keys(myJson)[3]] = myJson["currently"];
-          hourly["hourly"] = myJson["hourly"];
-          hourly["summary"] = myJson["summary"];
-          hourly["icon"] = myJson["icon"];
+          forecastObj = {};
 
-          console.log(hourly);
+          forecastObj["location"] = locationValue;
+          forecastObj[Object.keys(myJson)[3]] = myJson["currently"];
+
+          forecastObj["hourly"] = myJson["hourly"];
+          forecastObj["hourly"]["data"] = myJson["hourly"]["data"].slice(0, 8);
+
+          forecastObj["daily"] = myJson["daily"]
+          forecastObj["daily"]["data"] = myJson["daily"]["data"].slice(0, 7)
+
           res.setHeader("Content-Type", "application/json");
-          res.status(200).send(JSON.stringify(myJson));
+          res.status(200).send(JSON.stringify(forecastObj));
         })
         .catch(error => {
           res.setHeader("Content-Type", "application/json");
@@ -51,7 +52,6 @@ router.get("/", function(req, res, next) {
       res.setHeader("Content-Type", "application/json");
       res.status(400).send(JSON.stringify("Invalid request parameters."));
     }
-
 });
 
 module.exports = router;
