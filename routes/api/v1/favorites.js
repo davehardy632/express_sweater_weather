@@ -75,21 +75,37 @@ let fetchDataFromApi = async (location) => {
 
 let favoriteLocations = async (key) => {
   let response = await User.findAll({ where: { apiKey: key }})
-  // let results = await response.json();
-  return response;
+  let userId = response[0]["dataValues"]["id"]
+  let locations = Location.findAll({ where: { UserId: userId }})
+  let allLocations = []
+  return locations;
 }
 
-
+let accrueLatLong = async (array) => {
+  let coordinates = [];
+  for (let i = 0; i < array.length; i++) {
+    let res = await fetchDataFromApi(array[i]);
+    coordinates.push(res);
+  }
+  return coordinates;
+}
 
 
 router.get("/", async function(req, res, next) {
   userKey = req.body.api_key
 
   favorites = await favoriteLocations(userKey)
-  latitudeAndLongitude = await fetchDataFromApi("Denver, CO")
+  // latitudeAndLongitude = await fetchDataFromApi("Denver, CO")
 
-  console.log(favorites);
+  favoriteArray = [];
 
+  favorites.forEach(function(element) {
+    favoriteArray.push(element["dataValues"]["name"]);
+  })
+
+  latLongArray = await accrueLatLong(favoriteArray)
+
+  console.log(latLongArray[0]["lat"]);
 
   // User.findAll({ where: { apiKey: key }})
   // .then(function(user) {
