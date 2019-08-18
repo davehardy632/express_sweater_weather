@@ -59,44 +59,64 @@ router.get("/", function(req, res, next) {
 
 
 
+favorites.forEach(function(element) {
+  // console.log(element);
+coordinateObj.push(fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCa4n7lyqXASgTqCmCcV6EbTUhWM65tgZo&address=${element}`)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    // console.log(myJson["results"][0]["geometry"]["location"]["lat"])
+    // console.log(myJson["results"][0]["geometry"]["location"]["lng"])
+    return myJson["results"][0]["geometry"]["location"]
+  })
+  // above is the end of the first then statement
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({ error });
+  })
+  // above is supposedly the end of the catch statement for the fetch async function
+
+  // above is semicolon for the return value in the forEach block
+  )
+  // above is the end of the puush function to the end of the array
+});
 
 
 
 
 
 
+function arrayOfFavoriteLocations(key) {
+  User.findAll({ where: { apiKey: key }})
+  .then(function(user) {
+    id = user[0]["dataValues"]["id"];
+    Location.findAll({ where: { UserId: id }})
+    .then(function(locations) {
+      locationArray = [];
+      for (const key of Object.keys(locations)) {
+        locationArray.push(locations[key]["dataValues"]["name"]);
+      }
+      return locationArray;
+    })
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({ error });
+  });
+}
 
-
-
-
-
-
-
-
-
-
-// const fetch = require("node-fetch");
-//
-// class GoogleGeocodingApiService {
-//   constructor() {
-//       this.latLong = {};
-//   }
-//
-//   returnLocation (location) {
-//     fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCa4n7lyqXASgTqCmCcV6EbTUhWM65tgZo&address=${location}`)
-//     .then(response => response.json())
-//     .catch(error => console.error({ error }));
-//   }
-// }
-//
-//
-//
-// var latLongService = new GoogleGeocodingApiService();
-//
-// module.exports = latLongService;
-
-// "https://api.darksky.net/forecast/a0afd4046e86e2555d0a937cdac811fe/39.7392358,-104.990251?latitude=39.7392358&longitude=-104.990251&exclude=minutely,alerts,flags"
-
-// .then(response => response.json())
-// .then(hedgehogs => appendHedgehogs(hedgehogs))
-// .catch(error => console.error({ error }));
+function returnLatLong(element) {
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCa4n7lyqXASgTqCmCcV6EbTUhWM65tgZo&address=${element}`)
+  .then(function(response) {
+    return response.json();
+  })
+  .then(function(myJson) {
+    element = myJson["results"][0]["geometry"]["location"]
+    return element;
+  })
+  .catch(error => {
+    res.setHeader("Content-Type", "application/json");
+    res.status(500).send({ error });
+  });
+}
