@@ -113,8 +113,49 @@ router.get("/", async function(req, res, next) {
     latLongArray = await accrueLatLong(favoriteArray)
     favoriteForecasts = await accrueForecasts(latLongArray)
 
+
     res.setHeader("Content-Type", "application/json");
     res.status(200).send(JSON.stringify(favoriteForecasts));
+  }
+})
+
+let authenticateUser = async (apiKey) => {
+  let user = await User.findAll({ where: { apiKey: apiKey }})
+  return user;
+}
+
+let associatedLocation = async (id, locationName) => {
+  let locations = await Location.findAll({ where: {UserId: id, name: locationName}})
+  return locations;
+}
+
+
+router.delete("/", async function(req, res, next) {
+  let userKey = req.body.api_key
+  let location = req.body.location
+
+  authenticated = await authenticateUser(userKey)
+  let userId = authenticated[0]["dataValues"]["id"]
+
+  if ((authenticated[0]["dataValues"]["apiKey"]) == userKey) {
+
+    location = await associatedLocation(userId, location)
+    locationId = location[0]["dataValues"]["id"]
+
+    Location.destroy({where: {
+                      id: locationId
+                    }})
+                    .then(deletedLocation => {
+                      res.setHeader("Content-Type", "application/json");
+                      res.status(204).send()
+                    })
+                    .catch(error => {
+                      res.setHeader("Content-Type", "application/json");
+                      res.status(500).send({ error });
+                    });
+
+  } else {
+    console.log("Problems")
   }
 })
 
