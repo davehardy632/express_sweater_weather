@@ -7,6 +7,7 @@ var usersRouter = require('./routes/api/v1/users');
 var sessionsRouter = require('./routes/api/v1/sessions');
 var cityForecastRouter = require('./routes/api/v1/forecast');
 var favoritingLocationsRouter = require('./routes/api/v1/favorites')
+var apiKeys = require('dotenv').config()
 // add on line 18
 
 var app = express();
@@ -22,6 +23,7 @@ app.use('/api/v1/users', usersRouter)
 app.use('/api/v1/sessions', sessionsRouter)
 app.use('/api/v1/forecast', cityForecastRouter)
 app.use('/api/v1/favorites', favoritingLocationsRouter)
+// app.use(apiKeys.config())
 
 
 module.exports = app;

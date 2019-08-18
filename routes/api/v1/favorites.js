@@ -4,6 +4,7 @@ var User = require('../../../models').User;
 var Location = require('../../../models').Location;
 const fetch = require("node-fetch");
 const axios = require('axios');
+const keys = require("dotenv")
 
 router.post("/", function(req, res, next) {
   key = req.body.api_key;
@@ -53,13 +54,13 @@ function arrayOfFavoriteLocations(key) {
 
 
 let fetchDataFromApi = async (location) => {
-  let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCa4n7lyqXASgTqCmCcV6EbTUhWM65tgZo&address=${location}`);
+  let response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.GEOCODE_API_KEY}&address=${location}`);
   let results = await response.json();
   return results["results"][0]["geometry"]["location"];
 }
 
 let fetchForecastFromApi = async (coordinateObj) => {
-  let response = await fetch(`https://api.darksky.net/forecast/a0afd4046e86e2555d0a937cdac811fe/${coordinateObj["lat"]},${coordinateObj["lng"]}?exclude==minutely,hourly,daily,alerts,flags`);
+  let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${coordinateObj["lat"]},${coordinateObj["lng"]}?exclude==minutely,hourly,daily,alerts,flags`);
   let results = await response.json();
   return results;
 }
@@ -97,6 +98,8 @@ let accrueForecasts = async (array) => {
 
 
 router.get("/", async function(req, res, next) {
+  console.log(process.env.DARK_SKY_API_KEY)
+  console.log(process.env.GEOCODE_API_KEY)
   userKey = req.body.api_key
 
   if (userKey == undefined) {
