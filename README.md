@@ -9,10 +9,18 @@ Express sweater weather is an Javascript/ Express Api that allows a User to regi
 <h4>Packages</h4>
 
 <ul>
-  <h4>Testing<h4>
-  <li>Testing: $ npm install jest -g</li>
-  <li>Testing: npm install babel-jest supertest shelljs -D</li>
+  $ npm install jest -g
+  $ npm install babel-jest supertest shelljs -D
 </ul>
+
+<h4>Environment Variables</h4>
+
+  $ npm install dotenv
+
+<h4>Bcrypt</h4>
+
+  $ npm install bcrypt
+
 
 To set up, fork and clone the repository
 In the command line, run the following commands:
