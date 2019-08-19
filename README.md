@@ -8,10 +8,10 @@ Express sweater weather is an Javascript/ Express Api that allows a User to regi
 
 <h4>Packages</h4>
 
-<ul>
+
   $ npm install jest -g
   $ npm install babel-jest supertest shelljs -D
-</ul>
+
 
 <h4>Environment Variables</h4>
 
@@ -25,14 +25,14 @@ Express sweater weather is an Javascript/ Express Api that allows a User to regi
 To set up, fork and clone the repository
 In the command line, run the following commands:
 
-  > npx sequelize db:create
-  > npx sequelize db:migrate 
-  > npx sequelize db:seed:all
+  $ npx sequelize db:create
+  $ npx sequelize db:migrate 
+  $ npx sequelize db:seed:all
   
 <h2>To test</h2>
 
 To run the test suite, run the command:
-  > npm test
+  $ npm test
 
 <h2>Schema Design</h2>
 
@@ -62,8 +62,14 @@ Accept: application/json
   "password_confirmation": "password"
 }
 
-<h4>This should return an API key that can be used in future calls.
-To login and retrieve this api key, send the app the following request</h4>
+<h4>Response</h4>
+
+status: 201
+body:
+
+{
+  "api_key": "jgn983hy48thw9begh98h4539h4",
+}
 
 <h3>To login with the Application</h3>
 
@@ -76,7 +82,14 @@ Accept: application/json
   "password": "password"
 }
 
-<h4>This will return the original Api key returned to make Api calls.</h4>
+<h4>Response</h4>
+
+status: 200
+body:
+
+{
+  "api_key": "jgn983hy48thw9begh98h4539h4",
+}
 
 <h3>To query the application about forecast info for a city, send the following request to the application</h3>
 
@@ -89,7 +102,74 @@ body:
   "api_key": "jgn983hy48thw9begh98h4539h4"
 }
 
-<h4>This will return a formatted forecast response with the current weather for a city, the next eight hours, and the next 7 days.</h4>
+<h4>Response</h4>
+
+{
+  "location": "Denver, C0",
+  "currently": {
+      "summary": "Overcast",
+      "icon": "cloudy",
+      "precipIntensity": 0,
+      "precipProbability": 0,
+      "temperature": 54.91,
+      "humidity": 0.65,
+      "pressure": 1020.51,
+      "windSpeed": 11.91,
+      "windGust": 23.39,
+      "windBearing": 294,
+      "cloudCover": 1,
+      "visibility": 9.12,
+    },
+  "hourly": {
+    "summary": "Partly cloudy throughout the day and breezy this evening.",
+    "icon": "wind",
+    "data": [
+      {
+      "time": 1555016400,
+      "summary": "Overcast",
+      "icon": "cloudy",
+      "precipIntensity": 0,
+      "precipProbability": 0,
+      "temperature": 54.9,
+      "humidity": 0.65,
+      "pressure": 1020.8,
+      "windSpeed": 11.3,
+      "windGust": 22.64,
+      "windBearing": 293,
+      "cloudCover": 1,
+      "visibility": 9.02,
+      },
+    ]
+  },
+  "daily": {
+    "summary": "No precipitation throughout the week, with high temperatures bottoming out at 58°F on Monday.",
+    "icon": "clear-day",
+    "data": [
+      {
+        "time": 1554966000,
+        "summary": "Partly cloudy throughout the day and breezy in the evening.",
+        "icon": "wind",
+        "sunriseTime": 1554990063,
+        "sunsetTime": 1555036947,
+        "precipIntensity": 0.0001,
+        "precipIntensityMax": 0.0011,
+        "precipIntensityMaxTime": 1555045200,
+        "precipProbability": 0.11,
+        "precipType": "rain",
+        "temperatureHigh": 57.07,
+        "temperatureLow": 51.47,
+        "humidity": 0.66,
+        "pressure": 1020.5,
+        "windSpeed": 10.94,
+        "windGust": 33.93,
+        "cloudCover": 0.38,
+        "visibility": 9.51,
+        "temperatureMin": 53.49,
+        "temperatureMax": 58.44,
+      },
+    ]
+  }
+}
 
 <h3>To save a location to your favorites, send the following request.</h3>
 
@@ -104,7 +184,14 @@ body:
   "api_key": "jgn983hy48thw9begh98h4539h4"
 }
 
-<h4>This will add a location to your favorites which can be used in the next api call.</h4>
+<h4>Response</h4>
+
+status: 200
+body:
+
+{
+  "message": "Denver, CO has been added to your favorites",
+}
 
 <h3>To return the current forecasts of all your favorite cities, send the following request</h3>
 
@@ -118,7 +205,44 @@ body:
   "api_key": "jgn983hy48thw9begh98h4539h4"
 }
 
-<h4>This will return the current forecast of all your favorite cities that were saved in the post request prior.</h4>
+<h4>Response</h4>
+
+status: 200
+body:
+[
+  {
+    "location": "Denver, CO",
+    "current_weather": {
+      "summary": "Overcast",
+      "icon": "cloudy",
+      "precipIntensity": 0,
+      "precipProbability": 0,
+      "temperature": 54.91,
+      "humidity": 0.65,
+      "pressure": 1020.51,
+      "windSpeed": 11.91,
+      "windGust": 23.39,
+      "windBearing": 294,
+      "cloudCover": 1,
+      "visibility": 9.12,
+    },
+    "location": "Golden, CO",
+    "current_weather": {
+      "summary": "Sunny",
+      "icon": "sunny",
+      "precipIntensity": 0,
+      "precipProbability": 0,
+      "temperature": 71.00,
+      "humidity": 0.50,
+      "pressure": 1015.10,
+      "windSpeed": 10.16,
+      "windGust": 13.40,
+      "windBearing": 200,
+      "cloudCover": 0,
+      "visibility": 8.11,
+    }
+  }
+]
 
 <h3>Finally, to delete a location from your favorites, send a request in the following format.</h3>
 
@@ -133,8 +257,9 @@ body:
   "api_key": "jgn983hy48thw9begh98h4539h4"
 }
 
-<h4>This will delete the city from your favorites, and will no longer show up when you send a get request to favorites.</h4>
+<h4>Response</h4>
 
+status: 204
 
 <h2>Tech Stack Used:</h2>
 
