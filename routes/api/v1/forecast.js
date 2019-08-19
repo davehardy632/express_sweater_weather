@@ -4,22 +4,6 @@ var User = require('../../../models').User;
 const fetch = require("node-fetch");
 const keys = require("dotenv")
 
-let authenticateUser = async (apiKey) => {
-  let user = await User.findAll({ where: { apiKey: apiKey }})
-  return user;
-}
-
-let fetchLatLong = async (location) => {
-  let data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.GEOCODE_API_KEY}&address=${location}`);
-  let results = await data.json();
-  return results["results"][0]["geometry"]["location"];
-}
-
-let fetchForecast = async (latLongObj) => {
-  let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${latLongObj["lat"]},${latLongObj["lng"]}?exclude==minutely,alerts,flags`);
-  let results = await response.json();
-  return results;
-}
 
 
 router.get("/", async function(req, res, next) {
@@ -50,5 +34,24 @@ router.get("/", async function(req, res, next) {
       console.log("not working")
     }
 })
+
+//// async and helper methods
+
+let authenticateUser = async (apiKey) => {
+  let user = await User.findAll({ where: { apiKey: apiKey }})
+  return user;
+}
+
+let fetchLatLong = async (location) => {
+  let data = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.GEOCODE_API_KEY}&address=${location}`);
+  let results = await data.json();
+  return results["results"][0]["geometry"]["location"];
+}
+
+let fetchForecast = async (latLongObj) => {
+  let response = await fetch(`https://api.darksky.net/forecast/${process.env.DARK_SKY_API_KEY}/${latLongObj["lat"]},${latLongObj["lng"]}?exclude==minutely,alerts,flags`);
+  let results = await response.json();
+  return results;
+}
 
 module.exports = router;
