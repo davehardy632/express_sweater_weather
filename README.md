@@ -21,6 +21,12 @@ Express sweater weather is an Javascript/ Express Api that allows a User to regi
 
   $ npm install bcrypt
 
+<h4>Environment Variables</h4>
+  
+  <p>In the .env file, there are 2 environment variables for making Api calls,
+  $ GEOCODE_API_KEY=Your_key_here, This is an api key acquired when you register with googles geocode api service here: https://developers.google.com/maps/documentation/geocoding/start
+  $ DARK_SKY_API_KEY=Your_key_here, This key can be acquired when you register with the darksky forecast service here: https://darksky.net/dev
+</p>
 
 To set up, fork and clone the repository
 In the command line, run the following commands:
