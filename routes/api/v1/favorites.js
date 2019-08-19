@@ -87,6 +87,8 @@ router.delete("/", async function(req, res, next) {
   }
 })
 
+//// async and helper methods
+
 let authenticateUser = async (apiKey) => {
   let user = await User.findAll({ where: { apiKey: apiKey }})
   return user;
@@ -122,7 +124,6 @@ let favoriteLocations = async (key) => {
   return locations;
 }
 
-////////// async and helper methods
 
 let accrueLatLong = async (array) => {
   let coordinates= [];

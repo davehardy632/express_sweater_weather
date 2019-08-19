@@ -8,18 +8,7 @@ const express = require("express");
 var router = express.Router();
 var User = require('./models').User;
 
-// describe("api", () => {
-//   beforeAll(() => {
-//     shell.exec('npx sequelize db:create')
-//   });
-//   beforeEach(() => {
-//     shell.exec('npx sequelize db:migrate')
-//     shell.exec('npx sequelize db:seed:all')
-//   });
-//   afterEach(() => {
-//     shell.exec('npx sequelize db:migrate:undo:all')
-//     shell.exec('npx sequelize db:drop')
-//   });
+
 describe('api', () => {
   beforeAll(() => {
     shell.exec('npx sequelize db:create')
@@ -176,7 +165,7 @@ describe('api', () => {
       })
       return location1;
       return location2;
-      
+
       return user;
       return request(app)
       .get("/api/v1/favorites")
