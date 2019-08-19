@@ -13,6 +13,7 @@
     "debug": "~2.6.9",
     "dotenv": "^8.1.0",
     "express": "~4.16.1",
+    "jest": "^24.9.0",
     "morgan": "~1.9.1",
     "node-fetch": "^2.6.0",
     "pg": "^7.12.1",
@@ -21,7 +22,7 @@
     "uuid-apikey": "^1.4.3"
   },
   "devDependencies": {
-    "babel-jest": "^24.8.0",
+    "babel-jest": "^24.9.0",
     "shelljs": "^0.8.3",
     "supertest": "^4.0.2"
   }
