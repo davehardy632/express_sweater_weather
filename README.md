@@ -5,18 +5,25 @@ Express sweater weather is an Javascript/ Express Api that allows a User to regi
 To set up, fork and clone the repository
 In the command line, run the following commands:
 
-  npx sequelize db:create
-  npx sequelize db:migrate 
-  npx sequelize db:seed:all
+  > npx sequelize db:create
+  > npx sequelize db:migrate 
+  > npx sequelize db:seed:all
 
-To run the test suite, run the command: npm test
+To run the test suite, run the command:
+  > npm test
 
 Schema Design
 
-> The database used a one to many relationship between a registered user and their favorite locations. A user can have many favorite locations.
+The database used a one to many relationship between a registered user and their favorite locations. A user can have many favorite locations.
 
-User Table => email:string, password:envrypted_string, apiKey:random_character_string, timestamps
-Location Table => name:string, UserId:reference_to_user_table
+> User Table => 
+> email:string,
+> password:envrypted_string, 
+> apiKey:random_character_string, 
+> timestamps
+
+> Location Table => 
+> name:string, > UserId:reference_to_user_table
 
 
 To create an Account in your application, make a post request with the following info
